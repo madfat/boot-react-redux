@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import courseAPI from '../api/mockAuthorApi';
+import axios from 'axios';
 import {beginAjaxCall} from './ajaxStatusActions';
 
 export function loadAuthorsSuccess(authors) {
@@ -9,12 +10,22 @@ export function loadAuthorsSuccess(authors) {
 export function loadAuthors(){
     return function(dispatch){
         dispatch(beginAjaxCall());
+        return axios.get('api/authors').then(function(response){
+          const extracted_authors = response["data"]["_embedded"]["authors"]
+          dispatch(loadAuthorsSuccess(extracted_authors));
+        })
+        .catch(function(error){
+          console.log(error);
+          throw(error);
+        })
 
+/*
         return courseAPI.getAllAuthors().then(authors =>{
             dispatch(loadAuthorsSuccess(authors));
         }).catch(error => {
             throw(error);
         });
+*/
 
     };
 }
