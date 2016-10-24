@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,17 @@ public class CourseController {
             }
         });
         return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/api/courses", method = RequestMethod.POST)
+    public ResponseEntity<Course> createCourse(@RequestBody Course course){
+        try {
+            courseRepo.save(course);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
 }

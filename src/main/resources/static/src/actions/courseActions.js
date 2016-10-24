@@ -21,7 +21,6 @@ export function loadCourses(){
         axios.get('/api/courses')
           .then(function(response){
             console.log(response);
-            console.log(response["data"]);
             const extracted_courses = response["data"];
             dispatch(loadCoursesSuccess(extracted_courses));
           })
@@ -29,7 +28,6 @@ export function loadCourses(){
             console.log(error);
             throw(error);
           });
-
 
 /*
         return courseAPI.getAllCourses().then(courses =>{
@@ -42,13 +40,43 @@ export function loadCourses(){
 }
 
 export function saveCourse(course){
+    debugger;
+    var data = JSON.stringify(course);
+    console.log('b4 save and bfore remove:' + data);
+
+    const removeKey = ['author'];
+    removeKey.forEach(function(value){
+      delete course[value];
+    });
+
+    var data = JSON.stringify(course);
+    console.log('b4 save:' + data);
+    debugger;
     return function(dispatch, getState){
         dispatch(beginAjaxCall());
+        axios.post('/api/courses', course, {header: {"Content-Type": "application/json"} })
+          .then(savedCourse =>{
+/*
+            console.log(savedCourse);
+            savedCourse.id == "" ? dispatch(createCourseSuccess(savedCourse) : dispatch(updateCourseSuccess(savedCourse)) );
+*/
+            dispatch(createCourseSuccess(savedCourse));
+
+          })
+          .catch(error =>{
+            console.log(error);
+            dispatch(ajaxCallError(error));
+          }
+        );
+
+/*
         return courseAPI.saveCourse(course).then(savedCourse =>{
             course.id ? dispatch(updateCourseSuccess(savedCourse)) : dispatch(createCourseSuccess(savedCourse));
         }).catch(error => {
             dispatch(ajaxCallError(error));
             throw(error);
         });
+*/
+
     };
 }

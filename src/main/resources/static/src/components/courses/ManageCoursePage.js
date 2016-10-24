@@ -11,7 +11,7 @@ class ManageCoursePage extends React.Component{
 
         this.state = {
             course: Object.assign({}, this.props.course),
-            error: {}, 
+            error: {},
             saving: false
         };
 
@@ -35,6 +35,8 @@ class ManageCoursePage extends React.Component{
     saveCourse(event){
         event.preventDefault();
         this.setState({saving: true});
+        console.log('save course:' + JSON.stringify(this.state.course));
+        debugger;
         this.props.action.saveCourse(this.state.course)
             .then(() => this.redirect())
             .catch((error) =>{
@@ -53,7 +55,7 @@ class ManageCoursePage extends React.Component{
         return(
             <div>
                 <h1>Manage Course</h1>
-                <CourseForm 
+                <CourseForm
                     allAuthors={this.props.authors}
                     onChange={this.updateCourseState}
                     onSave={this.saveCourse}
@@ -85,7 +87,7 @@ function getCourseById(courses, id){
 function mapStateToProps(state, ownProps){
     const courseId = ownProps.params.id;
 
-    let course = {id: '', watchHref: '', title: '', authorId: '', length: '', category: ''};
+    let course = {id: '', title: '', authorId: '', length: '', category: ''};
 
     if (courseId && state.courses.length > 0){
         course = getCourseById(state.courses, courseId);
