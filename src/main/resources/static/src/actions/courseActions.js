@@ -40,18 +40,14 @@ export function loadCourses(){
 }
 
 export function saveCourse(course){
-    debugger;
-    var data = JSON.stringify(course);
-    console.log('b4 save and bfore remove:' + data);
+    console.log('Before Remove author:' + JSON.stringify(course));
 
     const removeKey = ['author'];
     removeKey.forEach(function(value){
       delete course[value];
     });
 
-    var data = JSON.stringify(course);
-    console.log('b4 save:' + data);
-    debugger;
+    console.log('After remove author:' + JSON.stringify(course));
     return function(dispatch, getState){
         dispatch(beginAjaxCall());
         axios.post('/api/courses', course, {header: {"Content-Type": "application/json"} })
@@ -60,8 +56,9 @@ export function saveCourse(course){
             console.log(savedCourse);
             savedCourse.id == "" ? dispatch(createCourseSuccess(savedCourse) : dispatch(updateCourseSuccess(savedCourse)) );
 */
+            console.log("one");
             dispatch(createCourseSuccess(savedCourse));
-
+            console.log("two");
           })
           .catch(error =>{
             console.log(error);

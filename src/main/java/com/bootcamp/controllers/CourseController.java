@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * Created by fathoni on 16/10/14.
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class CourseController {
     private final org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());

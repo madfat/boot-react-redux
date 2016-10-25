@@ -35,8 +35,8 @@ class ManageCoursePage extends React.Component{
     saveCourse(event){
         event.preventDefault();
         this.setState({saving: true});
+        console.log("one");
         console.log('save course:' + JSON.stringify(this.state.course));
-        debugger;
         this.props.action.saveCourse(this.state.course)
             .then(() => this.redirect())
             .catch((error) =>{
@@ -46,6 +46,7 @@ class ManageCoursePage extends React.Component{
     }
 
     redirect(){
+        console.log("four");
         this.setState({saving: false});
         toastr.success('Course saved');
         this.context.router.push('/courses');
