@@ -3,6 +3,8 @@ package com.bootcamp.controllers;
 import com.bootcamp.entities.Course;
 import com.bootcamp.repositories.AuthorRepository;
 import com.bootcamp.repositories.CourseRepository;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import net.minidev.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +45,40 @@ public class CourseController {
     }
 
     @RequestMapping(value="/api/courses", method = RequestMethod.POST)
-    public ResponseEntity<Course> createCourse(@RequestBody Course course){
+    public ResponseEntity<Object> createCourse(@RequestBody Course course){
+        JSONObject entity = new JSONObject();
         try {
-            courseRepo.save(course);
+            if (!course.getTitle().isEmpty()){
+                entity.put("result",courseRepo.save(course));
+                entity.put("success", true);
+            }else{
+                throw new Exception("Title should not be blank");
+            }
         }catch (Exception e){
             e.printStackTrace();
             log.error(e.getMessage());
+            entity.put("result",e.getMessage());
+            entity.put("success", false);
         }
-        return new ResponseEntity<>(course, HttpStatus.OK);
+        return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
+    @RequestMapping(value="/api/courses", method = RequestMethod.PUT)
+    public ResponseEntity<Object> modifyCourse(@RequestBody Course course){
+        JSONObject entity = new JSONObject();
+        try {
+            if (!course.getTitle().isEmpty()){
+                entity.put("result",courseRepo.save(course));
+                entity.put("success", true);
+            }else{
+                throw new Exception("Title should not be blank");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
+            entity.put("result",e.getMessage());
+            entity.put("success", false);
+        }
+        return new ResponseEntity<>(entity, HttpStatus.OK);
+    }
 }

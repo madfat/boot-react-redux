@@ -26,8 +26,8 @@ public class AuthorController {
     @Autowired
     AuthorRepository authorRepo;
 
-    @RequestMapping(value="/api/courses", method = RequestMethod.GET)
-    public ResponseEntity<List<Author>> courses() {
+    @RequestMapping(value="/api/authors", method = RequestMethod.GET)
+    public ResponseEntity<List<Author>> authors() {
         List<Author> authors = (List<Author>)authorRepo.findAll();
         return new ResponseEntity<>(authors, HttpStatus.OK);
     }
