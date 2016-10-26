@@ -1,1 +1,1 @@
-# REST API with Spring Boot that's comsumed by [react-redux](https://github.com/madfat/react-redux)
+# REST API with Spring Boot that's consumed by [react-redux](https://github.com/madfat/react-redux)
