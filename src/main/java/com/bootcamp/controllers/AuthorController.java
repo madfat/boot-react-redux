@@ -18,7 +18,8 @@ import java.util.List;
  * Created by fathoni on 16/10/18.
  */
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "https://localhost:4563")
+@CrossOrigin(origins = ("${app.cross.origin}"))
 @RestController
 public class AuthorController {
     private final org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());
