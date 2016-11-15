@@ -58,15 +58,4 @@ public class AppDatasourceConfig {
         transactionManager.setEntityManagerFactory(appEntityManagerFactory().getObject());
         return transactionManager;
     }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/courses").allowedOrigins("http://localhost:3000");
-                registry.addMapping("/api/authors").allowedOrigins("http://localhost:3000");
-            }
-        };
-    }
 }

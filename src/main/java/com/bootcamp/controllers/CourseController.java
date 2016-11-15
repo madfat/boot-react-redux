@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * Created by fathoni on 16/10/14.
  */
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class CourseController {
     private final org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());
@@ -80,5 +81,14 @@ public class CourseController {
             entity.put("success", false);
         }
         return new ResponseEntity<>(entity, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/api/courses/{id}", method = RequestMethod.DELETE)
+    public Course deleteCourse(@PathVariable("id") int id) {
+        Course course = courseRepo.findOne((long) id);
+        if (course != null) {
+            courseRepo.delete((long) id);
+        }
+        return course;
     }
 }
