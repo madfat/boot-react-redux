@@ -8,7 +8,6 @@ import net.minidev.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -23,7 +22,7 @@ import java.util.List;
 /**
  * Created by fathoni on 16/10/14.
  */
-@CrossOrigin(origins = ("${app.cross.origin}"))
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class CourseController {
     private final org.slf4j.Logger log = LoggerFactory.getLogger(this.getClass());
@@ -78,20 +77,6 @@ public class CourseController {
             e.printStackTrace();
             log.error(e.getMessage());
             entity.put("result",e.getMessage());
-            entity.put("success", false);
-        }
-        return new ResponseEntity<>(entity, HttpStatus.OK);
-    }
-
-    public ResponseEntity<Object> deleteCourse(@RequestBody Course course) {
-        JSONObject entity = new JSONObject();
-        try {
-            courseRepo.delete(course);
-            entity.put("success", true);
-        }catch (Exception e){
-            e.printStackTrace();
-            log.error(e.getMessage());
-            entity.put("result", e.getMessage());
             entity.put("success", false);
         }
         return new ResponseEntity<>(entity, HttpStatus.OK);
